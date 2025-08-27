@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {
-  InstrumentDescriptor,
+  MetricDescriptor as OtelMetricDescriptor,
   Histogram,
   MetricData,
   DataPoint,
@@ -152,7 +152,7 @@ export function createTimeSeries(
 
 function transformMetric<T>(
   point: DataPoint<T>,
-  instrumentDescriptor: InstrumentDescriptor,
+  instrumentDescriptor: OtelMetricDescriptor,
   metricPrefix: string
 ): {type: string; labels: {[key: string]: string}} {
   const type = transformMetricType(metricPrefix, instrumentDescriptor.name);

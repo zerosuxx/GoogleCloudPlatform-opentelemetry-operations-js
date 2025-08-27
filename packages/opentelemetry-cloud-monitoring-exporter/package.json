@@ -10,6 +10,7 @@
     "clean": "gts clean",
     "precompile": "version-update.js",
     "compile": "tsc",
+    "typecheck": "tsc --noEmit",
     "prepack": "npm run compile",
     "test": "nyc ts-mocha -p tsconfig.json 'test/**/*.test.ts'",
     "update-snapshot-tests": "SNAPSHOT_UPDATE=1 npm run test",
@@ -35,8 +36,7 @@
     "README.md"
   ],
   "publishConfig": {
-    "access": "public",
-    "registry": "https://wombat-dressing-room.appspot.com"
+    "access": "public"
   },
   "config": {
     "snap-shot-it": {
@@ -44,14 +44,10 @@
     }
   },
   "devDependencies": {
-    "@google-cloud/ops-js-scripts": "^1.0.0",
-    "@opentelemetry/api": "1.9.0",
-    "@opentelemetry/core": "1.26.0",
-    "@opentelemetry/resources": "1.26.0",
-    "@opentelemetry/sdk-metrics": "1.26.0",
+    "@google-cloud/ops-js-scripts": "../../scripts",
     "@types/mocha": "10.0.8",
     "@types/nock": "11.1.0",
-    "@types/node": "14.18.63",
+    "@types/node": "22.14.0",
     "@types/sinon": "17.0.3",
     "gts": "5.3.1",
     "mocha": "10.7.3",
@@ -69,9 +65,9 @@
     "googleapis": "^137.0.0"
   },
   "peerDependencies": {
-    "@opentelemetry/api": "^1.0.0",
-    "@opentelemetry/core": "^1.0.0",
-    "@opentelemetry/resources": "^1.0.0",
-    "@opentelemetry/sdk-metrics": "^1.0.0"
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/core": "^2.0.1",
+    "@opentelemetry/resources": "^2.0.1",
+    "@opentelemetry/sdk-metrics": "^2.0.1"
   }
 }

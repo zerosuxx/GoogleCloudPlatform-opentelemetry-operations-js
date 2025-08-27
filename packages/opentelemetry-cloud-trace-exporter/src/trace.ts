@@ -15,7 +15,7 @@
 import {
   ExportResult,
   ExportResultCode,
-  VERSION as OT_VERSION,
+  SDK_INFO
 } from '@opentelemetry/core';
 import {ReadableSpan, SpanExporter} from '@opentelemetry/sdk-trace-base';
 import {diag} from '@opentelemetry/api';
@@ -30,7 +30,7 @@ import {VERSION} from './version';
 import * as protoJson from '../protos/protos.json';
 
 const OT_REQUEST_HEADER = 'x-opentelemetry-outgoing-request';
-const TRACE_USER_AGENT = `opentelemetry-js ${OT_VERSION}; google-cloud-trace-exporter ${VERSION}`;
+const TRACE_USER_AGENT = `opentelemetry-js ${SDK_INFO['telemetry.sdk.version']}; google-cloud-trace-exporter ${VERSION}`;
 const OPTIONS: grpc.ClientOptions = {
   'grpc.primary_user_agent': TRACE_USER_AGENT,
 };

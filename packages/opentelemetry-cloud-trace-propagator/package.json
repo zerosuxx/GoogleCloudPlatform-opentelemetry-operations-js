@@ -1,6 +1,6 @@
 {
-  "name": "@google-cloud/opentelemetry-cloud-trace-propagator",
-  "version": "0.20.0",
+  "name": "@zerosuxx/opentelemetry-cloud-trace-propagator",
+  "version": "0.20.0-1",
   "description": "OpenTelemetry propagation package for Google Cloud Trace format",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
@@ -10,6 +10,7 @@
     "clean": "gts clean",
     "precompile": "version-update.js",
     "compile": "tsc",
+    "typecheck": "tsc --noEmit",
     "prepack": "npm run compile",
     "test": "nyc ts-mocha -p tsconfig.json 'test/**/*.test.ts'",
     "fix": "gts fix",
@@ -34,15 +35,12 @@
     "README.md"
   ],
   "publishConfig": {
-    "access": "public",
-    "registry": "https://wombat-dressing-room.appspot.com"
+    "access": "public"
   },
   "devDependencies": {
-    "@google-cloud/ops-js-scripts": "^1.0.0",
-    "@opentelemetry/api": "1.9.0",
-    "@opentelemetry/core": "1.26.0",
+    "@google-cloud/ops-js-scripts": "../../scripts",
     "@types/mocha": "10.0.8",
-    "@types/node": "14.18.63",
+    "@types/node": "22.14.0",
     "gts": "5.3.1",
     "mocha": "10.7.3",
     "nyc": "15.1.0",
@@ -53,7 +51,7 @@
     "hex2dec": "^1.0.1"
   },
   "peerDependencies": {
-    "@opentelemetry/api": "^1.0.0",
-    "@opentelemetry/core": "^1.0.0"
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/core": "^2.0.1"
   }
 }

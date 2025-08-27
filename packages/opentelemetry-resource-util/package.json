@@ -1,6 +1,6 @@
 {
-  "name": "@google-cloud/opentelemetry-resource-util",
-  "version": "2.4.0",
+  "name": "@zerosuxx/opentelemetry-resource-util",
+  "version": "2.4.0-1",
   "description": "Resource util used by other @google-cloud/opentelemetry* packages",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
@@ -10,6 +10,7 @@
     "clean": "gts clean",
     "precompile": "version-update.js",
     "compile": "tsc",
+    "typecheck": "tsc --noEmit",
     "prepack": "npm run compile",
     "test": "nyc ts-mocha -p tsconfig.json 'test/**/*.test.ts'",
     "update-snapshot-tests": "SNAPSHOT_UPDATE=1 npm run test",
@@ -35,8 +36,7 @@
     "README.md"
   ],
   "publishConfig": {
-    "access": "public",
-    "registry": "https://wombat-dressing-room.appspot.com"
+    "access": "public"
   },
   "config": {
     "snap-shot-it": {
@@ -44,12 +44,10 @@
     }
   },
   "devDependencies": {
-    "@google-cloud/ops-js-scripts": "^1.0.0",
+    "@google-cloud/ops-js-scripts": "../../scripts",
     "@opentelemetry/api": "1.9.0",
-    "@opentelemetry/resources": "1.26.0",
-    "@opentelemetry/semantic-conventions": "1.27.0",
     "@types/mocha": "10.0.8",
-    "@types/node": "14.18.63",
+    "@types/node": "22.14.0",
     "@types/sinon": "17.0.3",
     "bignumber.js": "9.1.2",
     "gts": "5.3.1",
@@ -61,10 +59,11 @@
     "typescript": "4.9.5"
   },
   "peerDependencies": {
-    "@opentelemetry/resources": "^1.0.0"
+    "@opentelemetry/resources": "^2.0.1",
+    "@opentelemetry/resource-detector-gcp": "^0.37.0",
+    "@opentelemetry/semantic-conventions": "^1.36.0"
   },
   "dependencies": {
-    "@opentelemetry/semantic-conventions": "^1.22.0",
     "gcp-metadata": "^6.0.0"
   }
 }

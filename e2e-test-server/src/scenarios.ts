@@ -15,21 +15,22 @@
 import {status as Status} from '@grpc/grpc-js';
 import {
   Tracer,
+} from '@opentelemetry/api';
+import {
   BasicTracerProvider,
   BatchSpanProcessor,
   TracerConfig,
 } from '@opentelemetry/sdk-trace-base';
 import {AlwaysOnSampler} from '@opentelemetry/sdk-trace-base';
 import {
-  Resource,
   envDetector,
-  detectResourcesSync,
+  emptyResource, detectResources,
 } from '@opentelemetry/resources';
 import {
   TraceExporter,
   TraceExporterOptions,
 } from '@google-cloud/opentelemetry-cloud-trace-exporter';
-import {GcpDetectorSync} from '@google-cloud/opentelemetry-resource-util';
+import { gcpDetector } from '@opentelemetry/resource-detector-gcp'
 import * as constants from './constants';
 import {context, SpanKind} from '@opentelemetry/api';
 import {AsyncHooksContextManager} from '@opentelemetry/context-async-hooks';
@@ -55,19 +56,22 @@ async function withTracer<R>(
     exporterConfig?: TraceExporterOptions;
   } = {}
 ): Promise<R> {
+  const additionalOptions = options.tracerConfig ?? {};
+  if (!additionalOptions?.spanProcessors) {
+    additionalOptions.spanProcessors = [];
+  }
+  additionalOptions.spanProcessors.push(new BatchSpanProcessor(
+    new TraceExporter({
+      projectId: constants.PROJECT_ID,
+      ...options.exporterConfig,
+    })
+  ))
+
   const tracerProvider = new BasicTracerProvider({
     sampler: new AlwaysOnSampler(),
-    resource: Resource.EMPTY,
+    resource: emptyResource(),
     ...options.tracerConfig,
   });
-  tracerProvider.addSpanProcessor(
-    new BatchSpanProcessor(
-      new TraceExporter({
-        projectId: constants.PROJECT_ID,
-        ...options.exporterConfig,
-      })
-    )
-  );
 
   try {
     return f(tracerProvider.getTracer(constants.INSTRUMENTING_MODULE_NAME));
@@ -132,8 +136,8 @@ async function detectResource(request: Request): Promise<Response> {
     },
     {
       tracerConfig: {
-        resource: detectResourcesSync({
-          detectors: [new GcpDetectorSync(), envDetector],
+        resource: detectResources({
+          detectors: [gcpDetector, envDetector],
         }),
       },
       exporterConfig: {

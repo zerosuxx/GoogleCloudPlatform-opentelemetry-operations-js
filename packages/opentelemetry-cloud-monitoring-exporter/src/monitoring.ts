@@ -17,11 +17,7 @@ import {
   ResourceMetrics,
   MetricData,
 } from '@opentelemetry/sdk-metrics';
-import {
-  ExportResult,
-  ExportResultCode,
-  VERSION as OT_VERSION,
-} from '@opentelemetry/core';
+import {ExportResult, ExportResultCode, SDK_INFO} from '@opentelemetry/core';
 import {ExporterOptions} from './external-types';
 import {GoogleAuth, JWT} from 'google-auth-library';
 // Import directly from this module instead of googleapis to improve bundler tree shaking
@@ -42,7 +38,7 @@ const MAX_BATCH_EXPORT_SIZE = 200;
 const OT_USER_AGENTS = [
   {
     product: 'opentelemetry-js',
-    version: OT_VERSION,
+    version: SDK_INFO['telemetry.sdk.version'],
   },
   {
     product: 'google-cloud-metric-exporter',
